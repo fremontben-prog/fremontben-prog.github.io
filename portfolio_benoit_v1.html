@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benoit Fremont — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --bg2: #161616;
+    --bg3: #1e1e1e;
+    --border: rgba(255,255,255,0.08);
+    --text: #f0ede8;
+    --muted: #888;
+    --accent: #c8ff00;
+    --accent2: #ff6b35;
+    --sidebar-w: 280px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 2rem;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .profile-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head);
+    font-size: 22px; font-weight: 800;
+    color: #0e0e0e;
+    margin-bottom: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .profile-name {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+  }
+
+  .profile-role {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .profile-location {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  nav { flex: 1; }
+
+  nav .nav-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+    padding-left: 0.5rem;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.55rem 0.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 400;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--text);
+    background: var(--bg3);
+  }
+
+  nav a.active { color: var(--accent); }
+
+  nav a .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  nav a.active .dot { background: var(--accent); }
+
+  .sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .social-links a {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    transition: all 0.15s;
+  }
+
+  .social-links a:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 3rem 3.5rem;
+    max-width: 960px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    margin-bottom: 3rem;
+    padding-top: 0.5rem;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: rgba(200, 255, 0, 0.08);
+    border: 1px solid rgba(200, 255, 0, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: #aaa;
+    max-width: 580px;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-body);
+    border: none;
+  }
+
+  .btn-primary { background: var(--accent); color: #0e0e0e; }
+  .btn-primary:hover { background: #d4ff20; }
+  .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); background: var(--bg3); }
+
+  /* ── BANNER ── */
+  .hero-banner {
+    width: 100%;
+    height: 200px;
+    background: var(--bg3);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 4rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-banner .big-text {
+    font-family: var(--font-head);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    opacity: 0.12;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    user-select: none;
+    text-align: center;
+  }
+
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(200,255,0,0.06), transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(255,107,53,0.05), transparent 60%);
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-head);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .section-header span { font-size: 0.78rem; color: var(--muted); }
+
+  section { margin-bottom: 4rem; }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+    background: var(--bg3);
+  }
+
+  .project-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    opacity: 0.9;
+  }
+
+  .project-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
+  }
+
+  .thumb-data  { background: linear-gradient(135deg, #0f2419, #1a3d2b); }
+  .thumb-ml    { background: linear-gradient(135deg, #1a0f2e, #2d1b50); }
+  .thumb-nlp   { background: linear-gradient(135deg, #1a1000, #3d2a00); }
+  .thumb-cv    { background: linear-gradient(135deg, #001a1a, #00373a); }
+  .thumb-cloud { background: linear-gradient(135deg, #001225, #002a4a); }
+  .thumb-proj  { background: linear-gradient(135deg, #1a0a00, #3d1f00); }
+  .thumb-erp   { background: linear-gradient(135deg, #0a0a1a, #1a1a3a); }
+
+  .project-body {
+    padding: 1rem 1.1rem 1.2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-title {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.7rem;
+  }
+
+  .project-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+
+  .tag {
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .tag-green  { background: rgba(100,200,80,0.1);  color: #7ecf68; }
+  .tag-purple { background: rgba(160,100,255,0.1); color: #b899ff; }
+  .tag-amber  { background: rgba(255,180,50,0.12); color: #f5b645; }
+  .tag-cyan   { background: rgba(50,200,220,0.1);  color: #5bd4e0; }
+  .tag-red    { background: rgba(255,100,80,0.1);  color: #ff7b6b; }
+  .tag-blue   { background: rgba(80,150,255,0.1);  color: #72aaff; }
+  .tag-lime   { background: rgba(200,255,0,0.1);   color: #c8ff00; }
+
+  /* ── CV SECTION ── */
+  .cv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.3rem 1.4rem;
+  }
+
+  .info-card.full { grid-column: 1 / -1; }
+
+  .info-card h3 {
+    font-family: var(--font-head);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 1.1rem;
+  }
+
+  /* Skills */
+  .skill-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.42rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.83rem;
+    gap: 12px;
+  }
+
+  .skill-row:last-child { border-bottom: none; }
+
+  .skill-name { flex: 1; }
+
+  .skill-bar-wrap {
+    width: 80px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .skill-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .skill-bar.orange { background: var(--accent2); }
+
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .timeline-item {
+    display: flex;
+    gap: 14px;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 10px;
+    padding-top: 5px;
+  }
+
+  .timeline-dot {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .timeline-dot.orange { background: var(--accent2); }
+  .timeline-dot.blue   { background: #72aaff; }
+  .timeline-dot.gray   { background: var(--muted); }
+
+  .timeline-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 4px;
+  }
+
+  .timeline-content { flex: 1; }
+
+  .timeline-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-org {
+    font-size: 0.8rem;
+    color: var(--accent2);
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-year {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.8rem;
+    color: #888;
+    line-height: 1.55;
+  }
+
+  /* Diplômes */
+  .diploma-item {
+    display: flex;
+    gap: 12px;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .diploma-item:last-child { border-bottom: none; }
+
+  .diploma-badge {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(200,255,0,0.08);
+    border: 1px solid rgba(200,255,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .diploma-title { font-size: 0.88rem; font-weight: 500; line-height: 1.3; }
+  .diploma-sub   { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+
+  /* Langues & centres d'intérêt */
+  .tags-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .tag-pill {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── CONTACT ── */
+  .contact-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-card h3 {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-card p { color: var(--muted); font-size: 0.9rem; }
+
+  .contact-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 0 2rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    :root { --sidebar-w: 240px; }
+    main { padding: 2rem 2rem; }
+  }
+
+  @media (max-width: 700px) {
+    #sidebar { display: none; }
+    main { margin-left: 0; padding: 2rem 1.5rem; }
+    .cv-grid { grid-template-columns: 1fr; }
+    .info-card.full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="profile-avatar">BF</div>
+  <div class="profile-name">Benoit Fremont</div>
+  <div class="profile-role">Data Scientist &amp;<br>Expert Gestion de Projet ERP</div>
+  <div class="profile-location">📍 Muzillac, Bretagne</div>
+
+  <nav>
+    <div class="nav-label">Navigation</div>
+    <a href="#accueil" class="active"><span class="dot"></span> Accueil</a>
+    <a href="#projets"><span class="dot"></span> Projets</a>
+    <a href="#cv"><span class="dot"></span> Mon CV</a>
+    <a href="#contact"><span class="dot"></span> Contact</a>
+
+    <div class="nav-label">Compétences clés</div>
+    <a href="#cv"><span class="dot"></span> Deep Learning</a>
+    <a href="#cv"><span class="dot"></span> Machine Learning</a>
+    <a href="#cv"><span class="dot"></span> Analyse de données</a>
+    <a href="#cv"><span class="dot"></span> Gestion de projet</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="social-links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="mailto:bfremont@hotmail.com">Email</a>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- HERO -->
+  <section id="accueil" class="hero">
+    <div class="hero-tag">✦ Portfolio Data Science</div>
+    <h1>Bienvenue sur<br>mon <em>portfolio</em> !</h1>
+    <p>Expert en gestion de projet Agile et pilotage d'ERP, je mets en œuvre des modèles de Machine Learning et Deep Learning pour optimiser la prise de décision. Ma double compétence permet de transformer les données métiers en solutions prédictives au service de la performance stratégique.</p>
+    <div class="hero-cta">
+      <a href="#projets" class="btn btn-primary">Voir les projets →</a>
+      <a href="#cv" class="btn btn-secondary">Mon CV</a>
+    </div>
+  </section>
+
+  <!-- BANNER -->
+  <div class="hero-banner">
+    <div class="big-text">DATA · ML · ERP</div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projets">
+    <div class="section-header">
+      <h2>Projets</h2>
+      <span>Formation OpenClassrooms · 2025–2026</span>
+    </div>
+    <div class="projects-grid">
+
+      <a href="projet_01_rendements_agricoles.html" class="project-card">
+        <div class="project-thumb thumb-data">🌳</div>
+        <div class="project-body">
+          <div class="project-title">Préparer des données et mener une analyse exploratoire</div>
+          <div class="project-tags">
+            <span class="tag tag-green">Data Cleaning</span>
+            <span class="tag tag-green">EDA</span>
+            <span class="tag tag-amber">PCA</span>
+            <span class="tag tag-amber">ANOVA</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-ml">🏗️</div>
+        <div class="project-body">
+          <div class="project-title">Prédire la consommation et les émissions de bâtiments</div>
+          <div class="project-tags">
+            <span class="tag tag-purple">Supervised Learning</span>
+            <span class="tag tag-purple">Grid Search</span>
+            <span class="tag tag-amber">Hyperparameters</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-proj">🛒</div>
+        <div class="project-body">
+          <div class="project-title">Segmenter les clients d'un site e-commerce</div>
+          <div class="project-tags">
+            <span class="tag tag-red">Unsupervised</span>
+            <span class="tag tag-red">Clustering</span>
+            <span class="tag tag-amber">E-commerce</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-nlp">💬</div>
+        <div class="project-body">
+          <div class="project-title">Suggestion automatique de mots-clés</div>
+          <div class="project-tags">
+            <span class="tag tag-amber">NLP</span>
+            <span class="tag tag-amber">Embedding</span>
+            <span class="tag tag-green">MLflow</span>
+            <span class="tag tag-green">CI/CD</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-cv">🐕</div>
+        <div class="project-body">
+          <div class="project-title">Identifier des races de chiens avec TensorFlow</div>
+          <div class="project-tags">
+            <span class="tag tag-cyan">Computer Vision</span>
+            <span class="tag tag-cyan">TensorFlow</span>
+            <span class="tag tag-blue">Transfer Learning</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-nlp">🔑</div>
+        <div class="project-body">
+          <div class="project-title">Nouvelles méthodes d'extraction de mots-clés</div>
+          <div class="project-tags">
+            <span class="tag tag-amber">KeyBERT</span>
+            <span class="tag tag-amber">Mistral</span>
+            <span class="tag tag-purple">PoC</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-cloud">☁️</div>
+        <div class="project-body">
+          <div class="project-title">Extraction de features sur données massives avec Spark</div>
+          <div class="project-tags">
+            <span class="tag tag-blue">Spark</span>
+            <span class="tag tag-blue">AWS</span>
+            <span class="tag tag-cyan">Hadoop</span>
+            <span class="tag tag-purple">PCA</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-thumb thumb-erp">📋</div>
+        <div class="project-body">
+          <div class="project-title">Réaliser le cadrage d'un projet IA</div>
+          <div class="project-tags">
+            <span class="tag tag-red">Agile / Scrum</span>
+            <span class="tag tag-lime">RGPD / CNIL</span>
+            <span class="tag tag-green">Éthique IA</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <div class="section-header">
+      <h2>Mon CV</h2>
+      <a href="#" class="btn btn-secondary" style="font-size:0.78rem;padding:0.4rem 1rem;">Télécharger PDF</a>
+    </div>
+
+    <div class="cv-grid">
+
+      <!-- Expériences -->
+      <div class="info-card full">
+        <h3>Expériences professionnelles</h3>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Certificat Data Scientist</div>
+              <div class="timeline-org">OpenClassrooms — Formation à distance</div>
+              <div class="timeline-year">Septembre 2025 → Juin 2026</div>
+              <div class="timeline-desc">Formation intensive en Data Science : Machine Learning, Deep Learning (ANN, CNN, RNN), NLP, Computer Vision, déploiement de modèles et gestion de projets IA.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot orange"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Product Owner &amp; Responsable Qualification</div>
+              <div class="timeline-org">PepperBay Edition — Éditeur ERP, Ploërmel</div>
+              <div class="timeline-year">Janvier 2019 → Avril 2025 · 6 ans</div>
+              <div class="timeline-desc">Priorisation des besoins clients, rédaction des User Stories. Mise en place du processus de qualification et des stratégies de tests. Plateforme de tests automatisés, pilotage des campagnes de tests. Rédaction et modélisation BPMN des process. Spécifications fonctionnelles et suivi des exigences.<br><br>
+              <span style="font-size:0.75rem;color:var(--muted);">Environnement : Jira · Confluence · Slack</span></div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot blue"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Chef de Projet MOA</div>
+              <div class="timeline-org">Cap Gemini — Nantes</div>
+              <div class="timeline-year">2005 → 2014 · 9 ans</div>
+              <div class="timeline-desc">Pilotage de projets informatiques en assistance à maîtrise d'ouvrage. Encadrement d'équipes, planification, gestion des risques, mise en place de référentiels documentaires et méthodes Agile.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot gray"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">Chef de Projet Informatique</div>
+              <div class="timeline-org">AstraZeneca — Dunkerque</div>
+              <div class="timeline-year">1996 → 2005 · 9 ans</div>
+              <div class="timeline-desc">Gestion de projets informatiques dans un contexte industriel pharmaceutique. Cycle en V, reporting Business Objects, ETL Datastage, bases de données Oracle et MySQL.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Formations -->
+      <div class="info-card">
+        <h3>Diplômes &amp; Formations</h3>
+        <div class="diploma-item">
+          <div class="diploma-badge">🎓</div>
+          <div>
+            <div class="diploma-title">Certificat Data Scientist</div>
+            <div class="diploma-sub">OpenClassrooms · 2025–2026 · À distance</div>
+          </div>
+        </div>
+        <div class="diploma-item">
+          <div class="diploma-badge">📜</div>
+          <div>
+            <div class="diploma-title">DESS C.A.A.E.</div>
+            <div class="diploma-sub">CNED – IAE Poitiers · 1999–2001 · À distance</div>
+          </div>
+        </div>
+        <div class="diploma-item">
+          <div class="diploma-badge">⚙️</div>
+          <div>
+            <div class="diploma-title">Ingénieur Génie Logiciel</div>
+            <div class="diploma-sub">EPITA Paris · 1989–1994</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compétences techniques -->
+      <div class="info-card">
+        <h3>Compétences techniques</h3>
+        <div class="skill-row">
+          <span class="skill-name">Python · Pandas · NumPy</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Scikit-Learn · ML</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">TensorFlow · PyTorch</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">SQL · Oracle · MySQL</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Git · Jupyter · Venv</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">ETL Datastage · BO</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:85%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Jira · Confluence · Scrum</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:95%"></div></div>
+        </div>
+      </div>
+
+      <!-- Compétences fonctionnelles -->
+      <div class="info-card">
+        <h3>Compétences fonctionnelles</h3>
+        <div class="skill-row">
+          <span class="skill-name">Gestion de projet Agile / Scrum</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:98%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Pilotage ERP</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:95%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Spécifications fonctionnelles</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Analyse de processus métiers</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">User Stories / Product Owner</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:88%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Gestion des risques</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:85%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Modélisation BPMN</span>
+          <div class="skill-bar-wrap"><div class="skill-bar orange" style="width:80%"></div></div>
+        </div>
+      </div>
+
+      <!-- Langues & Intérêts -->
+      <div class="info-card">
+        <h3>Langue</h3>
+        <div class="skill-row" style="margin-bottom:1.2rem">
+          <span class="skill-name">🇬🇧 Anglais — First Certificate Cambridge (1998)</span>
+        </div>
+        <h3 style="margin-top:1rem;">Centres d'intérêt</h3>
+        <div class="tags-list" style="margin-top:0.5rem;">
+          <span class="tag-pill">🎲 Jeux de société</span>
+          <span class="tag-pill">🏃 Course à pied</span>
+          <span class="tag-pill">🏊 Nage en eau libre</span>
+          <span class="tag-pill">💻 Informatique</span>
+        </div>
+      </div>
+
+      <!-- Infos personnelles -->
+      <div class="info-card">
+        <h3>Informations</h3>
+        <div class="skill-row"><span class="skill-name">📍 18 rue George Sand, Muzillac (56)</span></div>
+        <div class="skill-row"><span class="skill-name">📞 06 84 23 66 86</span></div>
+        <div class="skill-row"><span class="skill-name">✉️ bfremont@hotmail.com</span></div>
+        <div class="skill-row"><span class="skill-name">🚗 Permis B · Véhicule personnel</span></div>
+        <div class="skill-row"><span class="skill-name">🏠 Télétravail ou présentiel</span></div>
+        <div class="skill-row"><span class="skill-name">📍 Zone : Saint-Nazaire</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header">
+      <h2>Contact</h2>
+    </div>
+    <div class="contact-card">
+      <div>
+        <h3>Restons en contact !</h3>
+        <p>Disponible pour des collaborations, missions ou simplement pour échanger autour de la Data Science et de la gestion de projet.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:bfremont@hotmail.com" class="btn btn-primary">✉ Email</a>
+        <a href="#" class="btn btn-secondary">GitHub</a>
+        <a href="#" class="btn btn-secondary">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© Benoit Fremont — Tous droits réservés</span>
+    <span>Portfolio Data Science &amp; Gestion de Projet</span>
+  </footer>
+
+</main>
+
+<script>
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          a.classList.remove('active');
+          if (a.getAttribute('href') === '#' + id) a.classList.add('active');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
