@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benoit Fremont — Portfolio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
+:root {
+  --bg:        #0b0f1a;
+  --bg2:       #111827;
+  --bg3:       #1a2234;
+  --bg4:       #222d42;
+  --border:    rgba(148,163,184,0.10);
+  --border2:   rgba(148,163,184,0.06);
+  --text:      #e2e8f0;
+  --muted:     #64748b;
+  --muted2:    #94a3b8;
+  --accent:    #7aa2f7;
+  --accent2:   #c0caf5;
+  --gold:      #e2b96a;
+  --silver:    #94a3b8;
+  --sidebar-w: 280px;
+  --fh: 'Playfair Display', Georgia, serif;
+  --fb: 'Inter', system-ui, sans-serif;
+  --shadow:    0 1px 4px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  --shadow2:   0 4px 12px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.4);
+  --glow:      0 0 20px rgba(122,162,247,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);display:flex;min-height:100vh;}
+
+/* Subtle noise texture overlay */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:var(--sidebar-w);min-height:100vh;background:var(--bg2);
+  border-right:1px solid var(--border);position:fixed;top:0;left:0;
+  display:flex;flex-direction:column;padding:2.5rem 2rem;z-index:100;overflow-y:auto;
+  box-shadow:4px 0 24px rgba(0,0,0,0.3);
+}
+.monogram{
+  width:52px;height:52px;border-radius:6px;
+  background:linear-gradient(135deg,#1e3a8a,#3b5fe0);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:1.2rem;font-weight:700;font-style:italic;
+  letter-spacing:-0.02em;margin-bottom:1.2rem;flex-shrink:0;
+  box-shadow:0 4px 16px rgba(59,95,224,0.35);
+}
+.profile-name{font-family:var(--fh);font-size:1.08rem;font-weight:700;letter-spacing:-0.01em;line-height:1.2;margin-bottom:0.25rem;color:var(--text);}
+.profile-role{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;line-height:1.5;margin-bottom:0.5rem;font-weight:400;}
+.profile-loc{font-size:0.77rem;color:var(--muted);margin-bottom:2rem;}
+
+nav .nav-label{
+  font-size:0.6rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);
+  margin:1.6rem 0 0.5rem;padding-left:0.4rem;
+  border-top:1px solid var(--border);padding-top:1rem;
+}
+nav a{
+  display:flex;align-items:center;gap:10px;padding:0.48rem 0.5rem;
+  border-radius:5px;text-decoration:none;color:var(--muted);
+  font-size:0.82rem;font-weight:400;transition:all 0.15s;
+}
+nav a:hover{color:var(--text);background:var(--bg3);}
+nav a.active{color:var(--accent2);background:rgba(122,162,247,0.08);font-weight:500;}
+nav a .dot{width:5px;height:5px;border-radius:50%;background:var(--border);flex-shrink:0;}
+nav a.active .dot{background:var(--accent);}
+
+.sidebar-footer{border-top:1px solid var(--border);padding-top:1.4rem;margin-top:auto;}
+.social-links{display:flex;gap:6px;flex-wrap:wrap;}
+.social-links a{
+  font-size:0.72rem;color:var(--muted);text-decoration:none;
+  padding:3px 10px;border:1px solid var(--border);border-radius:4px;transition:all 0.15s;
+}
+.social-links a:hover{color:var(--accent2);border-color:var(--accent);}
+
+/* ── MAIN ── */
+main{margin-left:var(--sidebar-w);flex:1;padding:3.5rem 4rem;max-width:980px;position:relative;z-index:1;}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--muted);font-size:0.8rem;margin-bottom:2.5rem;transition:color 0.15s;}
+.back-link:hover{color:var(--accent2);}
+
+/* ── HERO ── */
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;}
+.eyebrow-line{width:28px;height:1px;background:linear-gradient(to right,var(--accent),transparent);}
+.eyebrow-text{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent);font-weight:500;}
+
+.hero h1{
+  font-family:var(--fh);font-size:clamp(2.3rem,4.5vw,3.5rem);
+  font-weight:900;line-height:1.05;letter-spacing:-0.02em;margin-bottom:1.3rem;
+  color:var(--text);
+}
+.hero h1 em{font-style:italic;color:var(--accent2);}
+.hero p{font-size:0.92rem;line-height:1.85;color:var(--muted2);max-width:100%;font-weight:300;margin-bottom:2rem;}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:0.6rem 1.4rem;border-radius:5px;
+  font-size:0.84rem;font-weight:500;text-decoration:none;cursor:pointer;
+  transition:all 0.18s;font-family:var(--fb);border:none;
+}
+.btn-primary{background:linear-gradient(135deg,#1e3a8a,#3b5fe0);color:#fff;box-shadow:0 4px 16px rgba(59,95,224,0.3);}
+.btn-primary:hover{box-shadow:0 6px 24px rgba(59,95,224,0.45);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent2);}
+
+/* Banner */
+.hero-banner{
+  width:100%;height:90px;border-radius:8px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin-bottom:4rem;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0b1535 0%,#0f1e3d 50%,#0d162e 100%);
+}
+.hero-banner::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 50%,rgba(122,162,247,0.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 50%,rgba(192,202,245,0.06) 0%,transparent 50%);
+}
+.hero-banner::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    90deg,transparent,transparent 60px,
+    rgba(122,162,247,0.015) 60px,rgba(122,162,247,0.015) 61px
+  );
+}
+.hero-banner-text{
+  font-family:var(--fh);font-size:3.5rem;font-weight:900;font-style:italic;
+  color:var(--accent2);opacity:0.08;letter-spacing:-0.03em;user-select:none;position:relative;z-index:1;
+}
+
+/* Section headers */
+.section-header{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:1.8rem;border-bottom:1px solid var(--border);padding-bottom:0.8rem;
+}
+.section-header h2{font-family:var(--fh);font-size:1.35rem;font-weight:700;letter-spacing:-0.01em;font-style:italic;color:var(--text);}
+.section-header span{font-size:0.75rem;color:var(--muted);}
+section{margin-bottom:4rem;}
+
+/* Projects */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1.2rem;}
+.project-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;
+  transition:all 0.22s;box-shadow:var(--shadow);
+}
+.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2);border-color:rgba(122,162,247,0.25);}
+.project-thumb{width:100%;aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;font-size:2rem;}
+.project-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.2));}
+.thumb-data{background:linear-gradient(135deg,#0a2818,#0f3d22);}
+.thumb-ml{background:linear-gradient(135deg,#150a2e,#1e1250);}
+.thumb-nlp{background:linear-gradient(135deg,#1a1200,#2e2200);}
+.thumb-cv{background:linear-gradient(135deg,#001a22,#002e3a);}
+.thumb-cloud{background:linear-gradient(135deg,#050d24,#0a1840);}
+.thumb-proj{background:linear-gradient(135deg,#1a0a00,#2e1500);}
+.thumb-erp{background:linear-gradient(135deg,#12001a,#1e0030);}
+.project-body{padding:1rem 1.1rem 1.2rem;flex:1;display:flex;flex-direction:column;}
+.project-num{font-size:0.62rem;color:var(--muted);font-family:var(--fh);font-style:italic;margin-bottom:0.25rem;}
+.project-title{font-family:var(--fh);font-size:0.9rem;font-weight:600;line-height:1.35;margin-bottom:0.8rem;color:var(--text);}
+.project-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;}
+.tag{font-size:0.64rem;font-weight:500;padding:2px 8px;border-radius:3px;letter-spacing:0.03em;}
+.tag-green{background:rgba(134,239,172,0.08);color:#86efac;}
+.tag-purple{background:rgba(167,139,250,0.1);color:#a78bfa;}
+.tag-amber{background:rgba(251,191,36,0.1);color:#fbbf24;}
+.tag-cyan{background:rgba(103,232,249,0.08);color:#67e8f9;}
+.tag-blue{background:rgba(122,162,247,0.1);color:var(--accent);}
+.tag-red{background:rgba(252,165,165,0.08);color:#fca5a5;}
+.tag-lime{background:rgba(163,230,53,0.08);color:#a3e635;}
+
+/* CV grid */
+.cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.info-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:1.3rem 1.4rem;margin-bottom:1.2rem;box-shadow:var(--shadow);
+}
+.info-card.full{grid-column:1/-1;}
+.info-card h3{
+  font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.13em;
+  color:var(--muted);margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:0.55rem;
+}
+.skill-row{display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border2);font-size:0.81rem;gap:12px;color:var(--muted2);}
+.skill-row:last-child{border-bottom:none;}
+.skill-bar-wrap{width:72px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;flex-shrink:0;}
+.skill-bar{height:100%;border-radius:1px;background:linear-gradient(to right,var(--accent),var(--accent2));}
+.skill-bar.gold{background:linear-gradient(to right,#b8860b,var(--gold));}
+
+.timeline{display:flex;flex-direction:column;}
+.timeline-item{display:flex;gap:14px;padding:0.9rem 0;border-bottom:1px solid var(--border2);}
+.timeline-item:last-child{border-bottom:none;}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:10px;padding-top:5px;}
+.tl-dot{width:9px;height:9px;border-radius:50%;border:2px solid var(--accent);background:var(--bg2);flex-shrink:0;}
+.tl-dot.gold{border-color:var(--gold);}
+.tl-dot.silver{border-color:var(--silver);}
+.tl-dot.dim{border-color:var(--muted);}
+.tl-line{width:1px;flex:1;background:var(--border);margin-top:4px;}
+.tl-title{font-size:0.88rem;font-weight:500;line-height:1.3;margin-bottom:0.15rem;color:var(--text);}
+.tl-org{font-size:0.77rem;color:var(--accent2);margin-bottom:0.15rem;font-style:italic;font-family:var(--fh);}
+.tl-year{font-size:0.7rem;color:var(--muted);margin-bottom:0.35rem;}
+.tl-desc{font-size:0.78rem;color:var(--muted2);line-height:1.6;}
+
+.diploma-item{display:flex;gap:12px;padding:0.7rem 0;border-bottom:1px solid var(--border2);align-items:flex-start;}
+.diploma-item:last-child{border-bottom:none;}
+.diploma-badge{width:34px;height:34px;border-radius:6px;background:rgba(122,162,247,0.08);border:1px solid rgba(122,162,247,0.15);display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;}
+.diploma-title{font-size:0.86rem;font-weight:500;line-height:1.3;color:var(--text);}
+.diploma-sub{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+.tags-list{display:flex;flex-wrap:wrap;gap:6px;}
+.tag-pill{font-size:0.75rem;padding:4px 10px;border-radius:4px;border:1px solid var(--border);color:var(--muted2);}
+
+.contact-card{
+  background:linear-gradient(135deg,#0f1e3d,#1a2d5a);
+  border:1px solid rgba(122,162,247,0.2);border-radius:8px;
+  padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;
+  gap:2rem;flex-wrap:wrap;box-shadow:0 8px 32px rgba(59,95,224,0.2);
+}
+.contact-card h3{font-family:var(--fh);font-size:1.5rem;font-weight:900;font-style:italic;letter-spacing:-0.02em;margin-bottom:0.3rem;color:var(--text);}
+.contact-card p{color:var(--muted2);font-size:0.88rem;}
+.btn-accent{background:linear-gradient(135deg,#1e3a8a,#3b5fe0);color:#fff;box-shadow:0 4px 16px rgba(59,95,224,0.3);}
+.btn-accent:hover{box-shadow:0 6px 24px rgba(59,95,224,0.5);}
+.btn-ghost{background:transparent;color:var(--accent2);border:1px solid rgba(122,162,247,0.25);}
+.btn-ghost:hover{background:rgba(122,162,247,0.08);border-color:var(--accent);}
+
+footer{border-top:1px solid var(--border);padding:1.5rem 0 2rem;font-size:0.75rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+@media(max-width:900px){:root{--sidebar-w:240px}main{padding:2.5rem 2rem}}
+@media(max-width:700px){#sidebar{display:none}main{margin-left:0;padding:2rem 1.5rem}.cv-grid{grid-template-columns:1fr}.info-card.full{grid-column:1}}
+</style>
+</head>
+<body>
+
+<aside id="sidebar">
+  <div class="monogram">BF</div>
+  <div class="profile-name">Benoit Fremont</div>
+  <div class="profile-role">Data Scientist · Gestion de projet · ERP</div>
+  <div class="profile-loc">📍 Muzillac, Bretagne</div>
+  <nav>
+    <div class="nav-label">Navigation</div>
+    <a href='#accueil' class='active'><span class='dot'></span>Accueil</a><a href='#projets'><span class='dot'></span>Projets</a><a href='#cv'><span class='dot'></span>Mon CV</a><a href='#contact'><span class='dot'></span>Contact</a>
+    <div class='nav-label'>Compétences</div><a href='#cv'><span class='dot'></span>Gestion de projet</a><a href='#cv'><span class='dot'></span>Machine Learning</a><a href='#cv'><span class='dot'></span>Deep Learning</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="social-links">
+      <a href="#">GitHub</a><a href="#">LinkedIn</a>
+    </div>
+  </div>
+</aside>
+<main>
+  <section id="accueil" style="padding-top:0.5rem;margin-bottom:3rem">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Portfolio Data Science</span></div>
+    <div class="hero">
+      <h1>Bienvenue sur<br>mon <em>portfolio</em>&nbsp;!</h1>
+      <p>Gestion de projet Agile et pilotage d'ERP, je mets en œuvre des modèles de Machine Learning et Deep Learning pour optimiser la prise de décision. Ma double compétence permet de transformer les données métiers en solutions prédictives au service de la performance stratégique.</p>
+      <div class="hero-cta">
+        <a href="#projets" class="btn btn-primary">Voir les projets →</a>
+        <a href="#cv" class="btn btn-secondary">Mon CV</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="hero-banner"><div class="hero-banner-text">DATA · ML · ERP</div></div>
+
+  <section id="projets">
+    <div class="section-header"><h2>Projets</h2><span>Formation OpenClassrooms · 2025–2026</span></div>
+    <div class="projects-grid">
+      <a href="projet_01_rendements_agricoles_navy.html" class="project-card">
+        <div class="project-thumb thumb-data">🌾</div>
+        <div class="project-body"><div class="project-num">Projet 01</div>
+          <div class="project-title">Prédire des rendements agricoles &amp; pipeline ML</div>
+          <div class="project-tags"><span class="tag tag-green">EDA</span><span class="tag tag-blue">PCA</span><span class="tag tag-amber">XGBoost</span><span class="tag tag-cyan">Streamlit</span></div>
+        </div>
+      </a>
+      <a href="projet_02_seattle_energy_navy.html" class="project-card"><div class="project-thumb thumb-ml">🏗️</div>
+        <div class="project-body"><div class="project-num">Projet 02</div>
+          <div class="project-title">Prédire la consommation et les émissions de bâtiments</div>
+          <div class="project-tags"><span class="tag tag-purple">Supervised</span><span class="tag tag-blue">Grid Search</span></div>
+        </div>
+      </a>
+      <a href="projet_10_llm_rag_navy.html" class="project-card"><div class="project-thumb thumb-nlp">🏀</div>
+        <div class="project-body"><div class="project-num">Projet 03</div>
+          <div class="project-title">LLM/RAG statistiques des joueurs de NBA</div>
+          <div class="project-tags"><span class="tag tag-amber">NLP</span><span class="tag tag-green">MLflow</span><span class="tag tag-lime">CI/CD</span></div>
+        </div>
+      </a>
+      <a href="#" class="project-card"><div class="project-thumb thumb-erp">📋</div>
+        <div class="project-body"><div class="project-num">Projet 04</div>
+          <div class="project-title">Réaliser le cadrage d'un projet IA</div>
+          <div class="project-tags"><span class="tag tag-red">Agile</span><span class="tag tag-lime">RGPD</span></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="cv">
+    <div class="section-header">
+      <h2>Mon CV</h2>
+    </div>
+    <div class="cv-grid">
+      <div class="info-card full">
+        <h3>Expériences professionnelles</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div><div class="tl-title">Certificat Data Scientist</div>
+              <div class="tl-org">OpenClassrooms — Formation à distance</div>
+              <div class="tl-year">Septembre 2025 → Juin 2026</div>
+              <div class="tl-desc">ML, Deep Learning (ANN, CNN, RNN), NLP, Computer Vision, FastAPI, CI/CD, déploiement de modèles et gestion de projets IA.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-left"><div class="tl-dot gold"></div><div class="tl-line"></div></div>
+            <div><div class="tl-title">Product Owner &amp; Responsable Qualification</div>
+              <div class="tl-org">PepperBay Edition — Éditeur ERP, Ploërmel</div>
+              <div class="tl-year">Janvier 2019 → Avril 2025 · 6 ans</div>
+              <div class="tl-desc">User Stories, processus de qualification, tests automatisés, modélisation BPMN, spécifications fonctionnelles. Jira · Confluence · Slack.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-left"><div class="tl-dot silver"></div><div class="tl-line"></div></div>
+            <div><div class="tl-title">Chef de Projet MOA</div>
+              <div class="tl-org">Cap Gemini — Nantes</div>
+              <div class="tl-year">2005 → 2014 · 9 ans</div>
+              <div class="tl-desc">Pilotage de projets IT en AMO. Encadrement d'équipes, planification, gestion des risques, méthodes Agile.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-left"><div class="tl-dot dim"></div></div>
+            <div><div class="tl-title">Chef de Projet Informatique</div>
+              <div class="tl-org">AstraZeneca — Dunkerque</div>
+              <div class="tl-year">1996 → 2005 · 9 ans</div>
+              <div class="tl-desc">Projets IT industriels pharmaceutiques. Cycle en V, Business Objects, ETL Datastage, Oracle, MySQL.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="info-card">
+        <h3>Compétences fonctionnelles</h3>
+        <div class="skill-row"><span>Gestion de projet Agile</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Pilotage ERP</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Spécifications fonctionnelles</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Analyse processus métiers</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>User Stories / PO</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Gestion des risques</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:85%"></div></div></div>
+        <div class="skill-row"><span>Modélisation BPMN</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:60%"></div></div></div>
+      </div>
+      <div class="info-card">
+        <h3>Compétences techniques</h3>
+        <div class="skill-row"><span>Python · Pandas · NumPy</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+        <div class="skill-row"><span>Scikit-Learn · ML</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+        <div class="skill-row"><span>TensorFlow · PyTorch</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+        <div class="skill-row"><span>SQL · Oracle · MySQL</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Git · Jupyter · Docker</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+        <div class="skill-row"><span>ETL Datastage · BO</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:65%"></div></div></div>
+        <div class="skill-row"><span>Jira · Confluence · Scrum</span><div class="skill-bar-wrap"><div class="skill-bar gold" style="width:95%"></div></div></div>
+      </div>
+      <div class="info-card">
+        <h3>Diplômes &amp; Formations</h3>
+        <div class="diploma-item"><div class="diploma-badge">🎓</div><div><div class="diploma-title">Certificat Data Scientist</div><div class="diploma-sub">OpenClassrooms · 2025–2026 · À distance</div></div></div>
+        <div class="diploma-item"><div class="diploma-badge">📜</div><div><div class="diploma-title">Master Administration des Entreprises (MAE - ex DESS CAAE)</div><div class="diploma-sub">CNED – IAE Poitiers · 1999–2001</div></div></div>
+        <div class="diploma-item"><div class="diploma-badge">⚙️</div><div><div class="diploma-title">Ingénieur Génie Logiciel</div><div class="diploma-sub">EPITA Paris · 1989–1994</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-header"><h2>Contact</h2></div>
+    <div class="contact-card">
+      <div>
+        <h3>Restons en contact !</h3>
+        <p>Disponible pour des collaborations, missions ou pour échanger autour de la Data Science.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="https://github.com/fremontben-prog" class="btn btn-ghost" target="_blank"
+           rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/beno%C3%AEt-fr%C3%A9mont-18a9143/" class="btn btn-ghost" target="_blank"
+           rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Benoit Fremont — Tous droits réservés</span>
+    <span>Portfolio Data Science &amp; Gestion de Projet</span>
+  </footer>
+</main>
+
+<script>
+  const navLinks = document.querySelectorAll('nav a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          a.classList.remove('active');
+          if(a.getAttribute('href')==='#'+id) a.classList.add('active');
+        });
+      }
+    });
+  },{threshold:0.25});
+  document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
+  navLinks.forEach(a=>{
+    a.addEventListener('click',e=>{
+      const href=a.getAttribute('href');
+      if(href&&href.startsWith('#')){e.preventDefault();document.querySelector(href)?.scrollIntoView({behavior:'smooth'});}
+    });
+  });
+</script>
+</body>
+</html>
